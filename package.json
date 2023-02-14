@@ -1,0 +1,24 @@
+{
+  "name": "blogapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+   "dev": "vite",
+  "build": "vite build",
+  "serve": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KleyDos/BlogApi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KleyDos/BlogApi/issues"
+  },
+  "homepage": "https://github.com/KleyDos/BlogApi#readme",
+  "devDependencies": {
+    "vite": "^4.0.4"
+  }
+}
