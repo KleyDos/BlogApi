@@ -2,23 +2,18 @@
   "name": "blogapi",
   "version": "1.0.0",
   "description": "",
-  "main": "vite.config.js",
+  "main": "main.js",
+  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/KleyDos/BlogApi.git"
+    "dev": "nodemon src/main.js --ext js"
   },
   "author": "kley",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/KleyDos/BlogApi/issues"
-  },
-  "homepage": "https://github.com/KleyDos/BlogApi#readme",
   "devDependencies": {
-    "vite": "^2.9.15"
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "helmet": "^6.0.1"
   }
 }
