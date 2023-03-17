@@ -103,7 +103,6 @@ router.post("/operacionespost", function (req, res) {
 
 router.post("/arreglo", function (req, res) {
   const palab1 = req.body.palab1;
-  console.log(palab1);
   const palab2 = req.body.palab2;
   const palab3 = req.body.palab3;
   const frase = [palab1, palab2, palab3];
@@ -111,21 +110,57 @@ router.post("/arreglo", function (req, res) {
 
   res.send({ resultado: frase });
 });
+//tarea: ruta:Buscar arreglo: buscar palabra del arreglo ya existe e indicar si existe o no
+router.post("/buscararreglo", function (req, res) {
+  const palab1 = req.body.palab1;
+  const palab2 = req.body.palab2;
+  const palab3 = req.body.palab3;
+  const palabBuscada = req.body.palabBuscada;
+  const frase = [palab1, palab2, palab3];
+  console.log(frase);
+  const palabEncontrada = frase.find((item) => item === palabBuscada);
+  console.log(palabEncontrada);
+  if (palabEncontrada === palabBuscada) {
+    return res.send({ resultado: "Palabra SI existe" });
+  }
+  return res.send({ resultado: "Palabra NO existe" });
+});
+
+//ruta: agregaarreglo recibe una palabra y la agrega al arreglo y
+router.post("/agregarArreglo", function (req, res) {
+  const palab1 = req.body.palab1;
+  const palab2 = req.body.palab2;
+  const palab3 = req.body.palab3;
+  const frase = [palab1, palab2, palab3];
+  console.log(frase);
+  const palab4 = req.body.palab4;
+  frase.push(palab4);
+  console.log(frase);
+  res.send({ resultado: frase });
+});
+
+// ruta elimina otra para eleminar
+router.post("/eliminaArreglo", function (req, res) {
+  const palab1 = req.body.palab1;
+  const palab2 = req.body.palab2;
+  const palab3 = req.body.palab3;
+  const palab4 = req.body.palab4;
+  const frase = [palab1, palab2, palab3, palab4];
+  console.log(frase);
+  const palab5 = req.body.palab5;
+  const nuevafrase = frase.filter((item) => item !== palab5);
+  console.log(nuevafrase);
+  res.send({ resultado: nuevafrase });
+});
 
 router.post("/concatena", function (req, res) {
-  console.log("concatena");
   const nombre = req.body.nombre;
   const primerApellido = req.body.primerApellido;
   const segundoApellido = req.body.segundoApellido;
   const nombreCompleto = nombre + " " + primerApellido + " " + segundoApellido;
   console.log(nombreCompleto);
   res.send({ mensaje: nombreCompleto });
-});// debe retormar error si falta alguno de los 3
-
-//hacerlos con las 3 operaciones restantes.
-
-//ruta nueva "/arreglo" que recibe tres palabras y construlle arregrlo con las tres palabras y retorma el arreglo
-//ruta "/concatena" que recibe nombre, primer apellido y segundo apellido y retorna un objeto con nombre completo
+});
 
 server.use(router);
 //iniciar web server
@@ -134,22 +169,3 @@ server.listen(3000, function () {
   console.log("El Servidor esta corriendo en puerto 3000");
 });
 //server.listen(puerto, funcion)
-
-//tarea ruta similar get. ruta2 y que devuelva 2
-// router.get("/", function (req, res) {
-//   console.log("Estoy en la ruta root(/)");
-//   res.send({ Mensaje: "Hola mundo" });
-// // });
-// const routerDos = express.Router();
-
-// router.get("/", function (req, res) {
-//   console.log("Estoy en la rutaDos(/)");
-//   res.send({ Mensaje: "Dos" });
-// });
-
-
-//tarea: ruta:Buscar arreglo: buscar palabra del arreglo ya exste e indicar si existe o no
-//ruta: agregaarreglo recibe una palabra y la agrega al arreglo y
-// ruta elimina otra para eleminar
-
-
