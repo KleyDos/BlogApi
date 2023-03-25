@@ -12,6 +12,7 @@ server.use(helmet());
 
 // Rutas
 const router = express.Router();
+let frase = [];
 
 router.get("/", function (req, res) {
   console.log("Estoy en la ruta root(/) ");
@@ -102,53 +103,54 @@ router.post("/operacionespost", function (req, res) {
 });
 
 router.post("/arreglo", function (req, res) {
-  const palab1 = req.body.palab1;
-  const palab2 = req.body.palab2;
-  const palab3 = req.body.palab3;
-  const frase = [palab1, palab2, palab3];
+  // const palab1 = req.body.palab1;
+  // const palab2 = req.body.palab2;
+  // const palab3 = req.body.palab3;
+  // const frase = [palab1, palab2, palab3];
   console.log(frase);
 
   res.send({ resultado: frase });
 });
 //tarea: ruta:Buscar arreglo: buscar palabra del arreglo ya existe e indicar si existe o no
 router.post("/buscararreglo", function (req, res) {
-  const palab1 = req.body.palab1;
-  const palab2 = req.body.palab2;
-  const palab3 = req.body.palab3;
+  // const palab1 = req.body.palab1;
+  // const palab2 = req.body.palab2;
+  // const palab3 = req.body.palab3;
   const palabBuscada = req.body.palabBuscada;
-  const frase = [palab1, palab2, palab3];
-  console.log(frase);
-  const palabEncontrada = frase.find((item) => item === palabBuscada);
+
+  // const {, palab2, palab3, palabBuscada } = req.body;
+  // const frase = [tijeras, palab2, palab3];
+  // console.log(frase);
+  const palabEncontrada = frase.find((item) => {
+    console.log(item);
+    if (item === palabBuscada) return item;
+  });
   console.log(palabEncontrada);
   if (palabEncontrada === palabBuscada) {
     return res.send({ resultado: "Palabra SI existe" });
   }
   return res.send({ resultado: "Palabra NO existe" });
 });
-
 //ruta: agregaarreglo recibe una palabra y la agrega al arreglo y
 router.post("/agregarArreglo", function (req, res) {
-  const palab1 = req.body.palab1;
-  const palab2 = req.body.palab2;
-  const palab3 = req.body.palab3;
-  const frase = [palab1, palab2, palab3];
   console.log(frase);
-  const palab4 = req.body.palab4;
-  frase.push(palab4);
+  const palab = req.body.palab;
+  frase.push(palab);
   console.log(frase);
   res.send({ resultado: frase });
 });
 
 // ruta elimina otra para eleminar
 router.post("/eliminaArreglo", function (req, res) {
-  const palab1 = req.body.palab1;
-  const palab2 = req.body.palab2;
-  const palab3 = req.body.palab3;
-  const palab4 = req.body.palab4;
-  const frase = [palab1, palab2, palab3, palab4];
-  console.log(frase);
+  // const palab1 = req.body.palab1;
+  // const palab2 = req.body.palab2;
+  // const palab3 = req.body.palab3;
+  // const palab4 = req.body.palab4;
+  // const frase = [palab1, palab2, palab3, palab4];
+  // console.log(frase);
   const palab5 = req.body.palab5;
   const nuevafrase = frase.filter((item) => item !== palab5);
+  frase = nuevafrase
   console.log(nuevafrase);
   res.send({ resultado: nuevafrase });
 });
@@ -161,6 +163,15 @@ router.post("/concatena", function (req, res) {
   console.log(nombreCompleto);
   res.send({ mensaje: nombreCompleto });
 });
+
+
+//Tarea: En agregar: si va agradar un apalab ya existe no agregar
+//Tarea: Ruta OrderArreglo: ordenarlo y retornarlo
+//Tarea: Ruta EdicarArreglo: Elemento a editar y nuevo valor
+//Tarea: Ruta BorrarArreglo: que elimine el arreglo y lo deje vacio
+//Tarea: Ruta ResetArrgelo: Todos los elemento del arreglo los cambie por cero (map)
+
+
 
 server.use(router);
 //iniciar web server
