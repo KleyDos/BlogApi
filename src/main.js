@@ -131,11 +131,18 @@ router.post("/buscararreglo", function (req, res) {
   }
   return res.send({ resultado: "Palabra NO existe" });
 });
-//ruta: agregaarreglo recibe una palabra y la agrega al arreglo y
+//ruta: agregarArreglo recibe una palabra y la agrega al arreglo
+//Tarea: En agregar: si va agradar una palabra ya existe no agregar
+
 router.post("/agregarArreglo", function (req, res) {
-  console.log(frase);
   const palab = req.body.palab;
-  frase.push(palab);
+  // frase.push(req.body.palab);
+  if (frase.indexOf(palab) === -1) {
+    frase.push(palab);
+  } else {
+    console.log("palabra ya");
+  }
+
   console.log(frase);
   res.send({ resultado: frase });
 });
@@ -150,7 +157,7 @@ router.post("/eliminaArreglo", function (req, res) {
   // console.log(frase);
   const palab5 = req.body.palab5;
   const nuevafrase = frase.filter((item) => item !== palab5);
-  frase = nuevafrase
+  frase = nuevafrase;
   console.log(nuevafrase);
   res.send({ resultado: nuevafrase });
 });
@@ -164,14 +171,21 @@ router.post("/concatena", function (req, res) {
   res.send({ mensaje: nombreCompleto });
 });
 
-
-//Tarea: En agregar: si va agradar un apalab ya existe no agregar
 //Tarea: Ruta OrderArreglo: ordenarlo y retornarlo
-//Tarea: Ruta EdicarArreglo: Elemento a editar y nuevo valor
+router.post("/ordenarArreglo", function (req, res) {
+  frase.sort();
+  console.log(frase);
+
+  res.send({ resultado: frase });
+});
+//Tarea: Ruta EditarArreglo: Elemento a editar y nuevo valor
+router.post("/editarArreglo", function (req, res) {
+
+  res.send({ resultado: frase });
+});
+
 //Tarea: Ruta BorrarArreglo: que elimine el arreglo y lo deje vacio
 //Tarea: Ruta ResetArrgelo: Todos los elemento del arreglo los cambie por cero (map)
-
-
 
 server.use(router);
 //iniciar web server
