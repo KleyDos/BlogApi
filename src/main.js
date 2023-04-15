@@ -132,8 +132,7 @@ router.post("/buscararreglo", function (req, res) {
   return res.send({ resultado: "Palabra NO existe" });
 });
 //ruta: agregarArreglo recibe una palabra y la agrega al arreglo
-//Tarea: En agregar: si va agradar una palabra ya existe no agregar
-
+//En agregar: si va agradar una palabra ya existe no agregar
 router.post("/agregarArreglo", function (req, res) {
   const palab = req.body.palab;
   // frase.push(req.body.palab);
@@ -141,6 +140,9 @@ router.post("/agregarArreglo", function (req, res) {
     frase.push(palab);
   } else {
     console.log("palabra ya");
+    return res
+      .status(400)
+      .send({ resultado: "la palabra" + palab + "ya existe" });
   }
 
   console.log(frase);
@@ -180,12 +182,57 @@ router.post("/ordenarArreglo", function (req, res) {
 });
 //Tarea: Ruta EditarArreglo: Elemento a editar y nuevo valor
 router.post("/editarArreglo", function (req, res) {
+  const nuevoValor = req.body.nuevoValor;
+  const elementoEditar = frase.indexOf(req.body.elementoEditar);
+
+  if (elementoEditar !== -1) {
+    frase[elementoEditar] = nuevoValor;
+  } else {
+    return res.status(400).send({
+      resultado: "la palabra " + req.body.elementoEditar + " no existe",
+    });
+  }
+  console.log(frase);
+
+  res.send({ resultado: frase });
+});
+//caso ejemplo a utilizar con propiedad de elemtos
+router.post("/editarArreglo/2", function (req, res) {
+  const nuevoValor = req.body.nuevoValor;
+  const elementoEditar = req.body.elementoEditar;
+  let  itemEncontrado = frase.find((item) => {
+    if (elementoEditar === item)
+    return  item
+  });
+  console.log("ItemEmcontrado: ", itemEncontrado);
+  if (itemEncontrado) {
+    itemEncontrado = nuevoValor;
+    console.log("ItemEmcontrado: ", itemEncontrado);
+    console.log(frase);
+  } else {
+    return res.status(400).send({
+      resultado: "la palabra " + req.body.elementoEditar + " no existe",
+    });
+  }
+  console.log(frase);
 
   res.send({ resultado: frase });
 });
 
-//Tarea: Ruta BorrarArreglo: que elimine el arreglo y lo deje vacio
-//Tarea: Ruta ResetArrgelo: Todos los elemento del arreglo los cambie por cero (map)
+//Ruta BorrarArreglo: que elimine el arreglo y lo deje vacio
+router.post("/borrarArreglo", function (req, res) {
+  frase = [];
+
+  console.log(frase);
+  res.send({ resultado: frase });
+});
+
+//Ruta ResetArrgelo: Todos los elemento del arreglo los cambie por cero (map)
+router.post("/resetArreglo", function (req, res) {
+  frase = frase.map((x) => 0);
+  console.log(frase);
+  res.send({ resultado: frase });
+});
 
 server.use(router);
 //iniciar web server
