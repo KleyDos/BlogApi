@@ -196,6 +196,8 @@ router.post("/editarArreglo", function (req, res) {
 
   res.send({ resultado: frase });
 });
+
+//no
 //caso ejemplo a utilizar con propiedad de elemtos
 router.post("/editarArreglo/2", function (req, res) {
   const nuevoValor = req.body.nuevoValor;
