@@ -235,7 +235,7 @@ router.post("/resetArreglo", function (req, res) {
   res.send({ resultado: frase });
 });
 
-//TAREAS ruta nueva objeto/y todo dentro***************************************************
+//ruta nueva objeto/y todo dentro***************************************************
 //ruta objeto/Agregar: desde postman arreglo Persona y cada persona con propiedades nombre, edad, id (se agrega al arrego )
 router.post("/objeto/agregarObjeto", function (req, res) {
   const persona = req.body.persona;
@@ -310,17 +310,38 @@ router.post("/objeto/ordenarObjeto", function (req, res) {
 
   console.log("Esta es la", listaPersonas);
 
-  res.send({ resultado: listaPersonas});
+  res.send({ resultado: listaPersonas });
 });
 
 // investigar funcion reduce de array
 
-//  /elimiar por id
+// /////elimiar por id REPETIDO linea 258*******************
+router.post("/objeto/eliminaObjeto", function (req, res) {
+  const idEliminar = req.body.idEliminar;
+  console.log("id a eliminar es", idEliminar);
+  const listaFiltrada = listaPersonas.filter(
+    (listaPersonas) => listaPersonas.id !== idEliminar
+  );
 
+  listaPersonas = listaFiltrada;
 
+  console.log("La Lista Filtrada es", listaFiltrada);
 
-      
+  res.send({ resultado: listaFiltrada });
+});
+
 //mayores de edad, que devuelva una sublista de solamente los mayores de edad (filter)
+router.post("/objeto/subLista", function (req, res) {
+  const mayoresEdad = listaPersonas.filter(
+    (listaPersonas) => listaPersonas.edad >= 18
+  );
+
+  listaPersonas = mayoresEdad;
+
+  console.log("La sub lista de mayores es", mayoresEdad);
+
+  res.send({ resultado: mayoresEdad });
+});
 
 server.use(router);
 //iniciar web server
