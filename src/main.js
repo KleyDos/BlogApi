@@ -13,6 +13,7 @@ server.use(helmet());
 // Rutas
 const router = express.Router();
 let frase = [];
+let listaPersonas = [];
 
 router.get("/", function (req, res) {
   console.log("Estoy en la ruta root(/) ");
@@ -197,14 +198,12 @@ router.post("/editarArreglo", function (req, res) {
   res.send({ resultado: frase });
 });
 
-//no
 //caso ejemplo a utilizar con propiedad de elemtos
 router.post("/editarArreglo/2", function (req, res) {
   const nuevoValor = req.body.nuevoValor;
   const elementoEditar = req.body.elementoEditar;
-  let  itemEncontrado = frase.find((item) => {
-    if (elementoEditar === item)
-    return  item
+  let itemEncontrado = frase.find((item) => {
+    if (elementoEditar === item) return item;
   });
   console.log("ItemEmcontrado: ", itemEncontrado);
   if (itemEncontrado) {
@@ -236,6 +235,93 @@ router.post("/resetArreglo", function (req, res) {
   res.send({ resultado: frase });
 });
 
+//TAREAS ruta nueva objeto/y todo dentro***************************************************
+//ruta objeto/Agregar: desde postman arreglo Persona y cada persona con propiedades nombre, edad, id (se agrega al arrego )
+router.post("/objeto/agregarObjeto", function (req, res) {
+  const persona = req.body.persona;
+  const personaAgrerar = listaPersonas.findIndex(
+    (listaPersonas) => listaPersonas.id === persona.id
+  );
+  if (personaAgrerar === -1) {
+    listaPersonas.push(persona);
+  } else {
+    console.log("persona ya existe");
+    return res
+      .status(400)
+      .send({ resultado: "La identificacion " + persona.id + " ya existe" });
+  }
+  console.log(listaPersonas);
+  res.send({ resultado: listaPersonas });
+});
+
+// /Eliminar, a eliminar por ID
+router.post("/objeto/eliminarObjeto", function (req, res) {
+  const id = req.body.id;
+
+  const nuevalista = listaPersonas.filter(
+    (listaPersonas) => listaPersonas.id !== id
+  );
+
+  listaPersonas = nuevalista;
+  console.log(nuevalista);
+  res.send({ resultado: nuevalista });
+});
+// /Editar a editar por ID y edita cualquiera*********************************NO
+router.post("/objeto/editarArreglo", function (req, res) {
+  const idEditar = req.body.idEditar;
+  // const nuevoValorPersona = { id: idEditar, persona: nuevoValorPersona };
+  // console.log("nuevoValorPersona", nuevoValorPersona);
+  let personaEncontrada = listaPersonas.find(
+    (persona) => persona.id === idEditar
+  );
+  // personaEncontrada.nombre = req.body.nuevaPersona.nombre
+
+  personaEncontrada = req.body.nuevaPersona;
+
+  // personaEncontrada = {
+  //   nombre: req.body.nuevaPersona.nombre,
+  // };
+  console.log("perdonaEncontrada", personaEncontrada);
+  console.log(listaPersonas);
+
+  res.send({ resultado: personaEncontrada });
+});
+
+// //Buscar a editar por ID y nombre***************
+router.post("/objeto/buscarObjeto", function (req, res) {
+  const idBuscado = req.body.idBuscado;
+  console.log("idBuscado", idBuscado);
+  const idEncontrado = listaPersonas.find(
+    (persona) => persona.id === idBuscado
+  );
+  console.log("idEncontrado", idEncontrado);
+  if (!idEncontrado) {
+    return res.send({ resultado: "id NO existe" });
+  }
+
+  if (idEncontrado.id === idBuscado) {
+    return res.send({ resultado: "id SI existe" });
+  }
+});
+
+// //***ordenar a editar por ID y nombre
+router.post("/objeto/ordenarObjeto", function (req, res) {
+  listaPersonas.sort((x, y) => x.nombre.localeCompare(y.nombre));
+
+  console.log("Esta es la", listaPersonas);
+
+  res.send({ resultado: listaPersonas});
+});
+
+// investigar funcion reduce de array
+
+//  /elimiar por id
+
+
+
+      
+//mayores de edad, que devuelva una sublista de solamente los mayores de edad (filter)
+
 server.use(router);
 //iniciar web server
 
@@ -243,3 +329,5 @@ server.listen(3000, function () {
   console.log("El Servidor esta corriendo en puerto 3000");
 });
 //server.listen(puerto, funcion)
+
+// actualizar version node
